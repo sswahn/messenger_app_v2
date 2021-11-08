@@ -1,0 +1,89 @@
+.main {
+  height: 100vh;
+  margin: 0 auto;
+  padding: 15px;
+  position: relative;
+  max-width: 800px;
+}
+
+.input {
+  bottom: 10px;
+  margin-top: 10px;
+  max-width: 800px;
+  position: fixed;
+  width: 100%;
+}
+
+.input textarea {
+  border: 1px solid #222;
+  border-bottom: 0;
+  border-radius: 5px 5px 0 0;
+  height: 38px;
+  outline: none;
+  padding: 10px 10px 0 10px;
+  resize: none;
+  width: 100%;
+}
+
+.input div { /* toolbar */
+  background: #eee;
+  border: 1px solid #222;
+  border-top: 2px solid #ccc;
+  border-radius: 0 0 5px 5px;
+  padding: 5px 10px;
+
+  margin-top: -5px;
+}
+
+.input div button {
+  background: gray;
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  padding: 5px 10px
+}
+
+
+
+.feed {
+  width: 100%;
+}
+
+.feed article {
+  border: 1px dashed white; /* forces parent to contain children */
+}
+
+.feed article:hover {
+  background: #eee;
+}
+
+.feed header {
+  display: flex;
+  padding: 10px 0;
+}
+
+.feed header img {
+  background: black;
+  border-radius: var(--border-radius);
+  width: 50px;
+  height: 50px;
+}
+
+.feed header button {
+  background: none;
+  border: 0;
+  font-size: 18px;
+  font-weight: bold;
+  height: 20px;
+  margin: 0 10px;
+}
+
+.feed header time {
+  color: #777;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.feed div {
+  margin: -30px 0 10px 60px;
+}
