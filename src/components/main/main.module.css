@@ -7,7 +7,7 @@
 }
 
 .input {
-  bottom: 10px;
+  bottom: 25px;
   margin-top: 10px;
   max-width: 800px;
   position: fixed;
@@ -46,7 +46,7 @@
 
 
 .feed {
-  height: calc(100% - 75px);
+  height: calc(100% - 100px);
   position: relative;
   width: 100%;
 
