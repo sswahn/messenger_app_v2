@@ -40,7 +40,7 @@ export default () => {
     event.target.elements[0].value = ''
 
 
-    dispatch({ type: 'update', payload: storage })
+    dispatch({ type: 'update', payload: data })
 
     
     //const response = await server.post('post.some.data', request)

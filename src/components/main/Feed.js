@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { Context } from '../../Provider'
 import store from '../../utilities/Store'
 import server from '../../utilities/Server'
@@ -6,10 +6,12 @@ import styles from './main.module.css'
 
 export default () => {
   const [context, dispatch] = useContext(Context)
+  const [state, setState] = useState({ data: [] })
 
   const loadData = async event => {
-    const storage = store.get('store')
+    const storage = store.get('store') // should be api call
     dispatch({ type: 'update', payload: storage })
+    setState({ data: storage })
   }
 
   const handleEdit = event => {
@@ -27,13 +29,19 @@ export default () => {
     dispatch({ type: 'update', payload: data })
   }
 
+  // set state if context change
+  useEffect(() => {
+    setState({ data: context.data })
+  }, [context.data])
+
+  // load data from api
   useEffect(() => {
     loadData()
-  }, [context.data])
+  }, [])
 
   return (
     <div className={styles.feed}>
-      {context.data.length ? context.data.map((item, index) => 
+      {state.data.length ? state.data.map((item, index) => 
         <article id={item.id} key={index}>
           <header>
             <img src="" alt="" />
