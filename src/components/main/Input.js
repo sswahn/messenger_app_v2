@@ -34,19 +34,17 @@ export default () => {
       message: event.target.elements[0].value
     }
 
-    const storage = store.get('store') || []
-    const data = [ ...storage, request ]
-    store.set('store', data)
-    event.target.elements[0].value = ''
-
-
-    dispatch({ type: 'update', payload: data })
-
-    
     //const response = await server.post('post.some.data', request)
     /*if (response.error !== undefined) {
       return alert('There was a system error.')
     }*/
+
+    const storage = store.get('store') || []
+    const data = [ ...storage, request ]
+    store.set('store', data)
+    event.target.elements[0].value = ''
+    dispatch({ type: 'update', payload: data })
+    event.target.elements[0].focus()
   }
 
   return (

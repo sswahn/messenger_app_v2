@@ -29,32 +29,34 @@ export default () => {
     dispatch({ type: 'update', payload: data })
   }
 
-  // set state if context change
+  // updates state when context change
   useEffect(() => {
     setState({ data: context.data })
   }, [context.data])
 
-  // load data from api
+  // initial load data from api
   useEffect(() => {
     loadData()
   }, [])
 
   return (
     <div className={styles.feed}>
-      {state.data.length ? state.data.map((item, index) => 
-        <article id={item.id} key={index}>
-          <header>
-            <img src="" alt="" />
-            <button rel="author">{item.user}</button>
-            <time dateTime="">{item.date}</time>
-          </header>
-          <div>{item.message}</div>
-          <footer>
-            <button onClick={handleEdit}>edit</button>
-            <button onClick={handleDelete}>delete</button>
-          </footer>
-        </article>
-      ) : <article>no posts</article>}
+      <div className={styles.view}>
+        {state.data.length ? state.data.map((item, index) => 
+          <article id={item.id} key={index}>
+            <header>
+              <img src="" alt="" />
+              <button rel="author">{item.user}</button>
+              <time dateTime="">{item.date}</time>
+            </header>
+            <div>{item.message}</div>
+            <footer>
+              <button onClick={handleEdit}>edit</button>
+              <button onClick={handleDelete}>delete</button>
+            </footer>
+          </article>
+        ) : <article>no posts</article>}
+      </div>
     </div>
   )
 }
