@@ -46,36 +46,14 @@
 
 
 .feed {
-  height: calc(100% - 100px);
-  position: relative;
+  padding-bottom: 115px;
   width: 100%;
-
-  margin: 0;
-  padding: 0;
-
-  border: 1px dashed red;
-}
-
-.view {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  max-width: 800px;
-  width: 100%;
-
-
-  margin: 0;
-  padding: 0;
 
   border: 1px dashed orange;
 }
 
-
-
-
-
 .feed article {
-  border: 1px dashed white; /* forces parent to contain children */
+  border: 1px dashed white; /* forces parent to contain children (dont remove) */
 }
 
 .feed article:hover {
@@ -89,7 +67,7 @@
 
 .feed header img {
   background: black;
-  border-radius: var(--border-radius);
+  border-radius: 5px;
   width: 50px;
   height: 50px;
 }

@@ -9,7 +9,7 @@ export default () => {
   const [state, setState] = useState({ data: [] })
 
   const loadData = async event => {
-    const storage = store.get('store') // should be api call
+    const storage = store.get('store') // replace with api call
     dispatch({ type: 'update', payload: storage })
     setState({ data: storage })
   }
@@ -39,24 +39,26 @@ export default () => {
     loadData()
   }, [])
 
+  useEffect(() =>{
+    window.scroll(0, document.body.offsetHeight)
+  }, [])
+
   return (
-    <div className={styles.feed}>
-      <div className={styles.view}>
-        {state.data.length ? state.data.map((item, index) => 
-          <article id={item.id} key={index}>
-            <header>
-              <img src="" alt="" />
-              <button rel="author">{item.user}</button>
-              <time dateTime="">{item.date}</time>
-            </header>
-            <div>{item.message}</div>
-            <footer>
-              <button onClick={handleEdit}>edit</button>
-              <button onClick={handleDelete}>delete</button>
-            </footer>
-          </article>
-        ) : <article>no posts</article>}
-      </div>
+    <div id="feed" className={styles.feed}>
+      {state.data.length ? state.data.map((item, index) => 
+        <article id={item.id} key={index}>
+          <header>
+            <img src="" alt="" />
+            <button rel="author">{item.user}</button>
+            <time dateTime="">{item.date}</time>
+          </header>
+          <div>{item.message}</div>
+          <footer>
+            <button onClick={handleEdit}>edit</button>
+            <button onClick={handleDelete}>delete</button>
+          </footer>
+        </article>
+      ) : <article>no posts</article>}
     </div>
   )
 }

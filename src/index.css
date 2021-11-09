@@ -9,17 +9,21 @@
   padding: 0;
 }
 
-html, body {
-  background: var(--alt-color);
-  color: var(--text-color);
-  height: 100%;
+html {
   width: 100%;
+
+  border: 2px dashed red;
+}
+
+body {
+  width: 100%;
+
+  border: 2px dashed green;
 }
 
 button {
   cursor: pointer;
 }
-
 
 ::placeholder {
   font-weight: normal;
