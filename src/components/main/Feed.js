@@ -32,16 +32,18 @@ export default () => {
   // updates state when context change
   useEffect(() => {
     setState({ data: context.data })
+    //window.scroll(0, document.body.offsetHeight)
   }, [context.data])
+
+  useEffect(()=> {
+    window.scroll(0, document.body.offsetHeight)
+  }, [state.data])
 
   // initial load data from api
   useEffect(() => {
     loadData()
   }, [])
 
-  useEffect(() =>{
-    window.scroll(0, document.body.offsetHeight)
-  }, [])
 
   return (
     <div id="feed" className={styles.feed}>
