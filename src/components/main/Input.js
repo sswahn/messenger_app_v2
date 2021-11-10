@@ -7,8 +7,21 @@ import styles from './main.module.css'
 export default () => {
   const [context, dispatch] = useContext(Context)
 
-  const [state, setState] = useState({})
+  const [state, setState] = useState({ field_height: 50 })
 
+  const handleTextareaExpansion = event => {
+    const count = (event.target.value.split('\n').length - 1)
+    if (state.counter <= 3) {
+      return setState({  ...state, counter: count })
+    }
+    if (count > state.counter) {
+      setState({ 
+        ...state, 
+        field_height: state.field_height + 16, 
+        counter: count 
+      })
+    }
+  }
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -39,16 +52,33 @@ export default () => {
 
   return (
     <form className={styles.input} onSubmit={handleSubmit}>
-      <textarea placeholder="Write a message"></textarea>
+      <textarea placeholder="Write a message" onChange={handleTextareaExpansion} style={{height: `${state.field_height}px`}}></textarea>
       <div role="toolbar">
-        <button><b>B</b></button>
-        <button><i>i</i></button>
-        <button>link</button>
-        <button>@</button>
-        <button>emoji</button>
-        <button>attach file</button>
-        
-        <button type="submit">Send</button>
+        <div>
+          <button>
+            <i className="fa fa-bold"></i>
+          </button>
+          <button>
+            <i className="fa fa-italic"></i>
+          </button>
+        </div>
+        <div>
+          <button>
+            <i className="fa fa-link"></i>
+          </button>
+          <button>
+            <i className="fa fa-at"></i>
+          </button>
+          <button>
+            <i className="fa fa-face-smile"></i>
+          </button>
+          <button>
+            <i className="fa fa-image"></i>
+          </button>
+          <button type="submit">
+            <i className="fa fa-paper-plane"></i>
+          </button>
+        </div>
       </div>
     </form>
   )
