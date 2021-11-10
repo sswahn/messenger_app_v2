@@ -51,6 +51,7 @@
 
 .feed article {
   border: 1px dashed white; /* forces parent to contain children (dont remove) */
+  position: relative;
 }
 
 .feed article:hover {

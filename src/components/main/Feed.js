@@ -3,6 +3,7 @@ import { Context } from '../../Provider'
 import store from '../../utilities/Store'
 import server from '../../utilities/Server'
 import styles from './main.module.css'
+import Dropdown from '../dropdown/Dropdown'
 
 export default () => {
   const [context, dispatch] = useContext(Context)
@@ -55,10 +56,7 @@ export default () => {
             <time dateTime="">{item.date}</time>
           </header>
           <div>{item.message}</div>
-          <footer>
-            <button onClick={handleEdit}>edit</button>
-            <button onClick={handleDelete}>delete</button>
-          </footer>
+          <Dropdown />
         </article>
       ) : <article>no posts</article>}
     </div>
