@@ -15,27 +15,12 @@ export default () => {
     setState({ data: storage })
   }
 
-  const handleEdit = event => {
-    // build api first
-  }
-
-  const handleDelete = event => {
-    if (!window.confirm('Permanently delete message?')) {
-      return
-    }
-    const id = Number(event.target.closest('article').id)
-    const storage = store.get('store')
-    const data = storage.filter(obj => obj.id !== id)
-    store.set('store', data)
-    dispatch({ type: 'update', payload: data })
-  }
-
   // updates state when context change
   useEffect(() => {
     setState({ data: context.data })
-    //window.scroll(0, document.body.offsetHeight)
   }, [context.data])
 
+  // scroll to bottom
   useEffect(()=> {
     window.scroll(0, document.body.offsetHeight)
   }, [state.data])
@@ -44,7 +29,6 @@ export default () => {
   useEffect(() => {
     loadData()
   }, [])
-
 
   return (
     <div id="feed" className={styles.feed}>

@@ -1,11 +1,26 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
+import { Context } from '../../Provider'
+import store from '../../utilities/Store'
 import styles from './dropdown.module.css'
 
 export default () => {
+  const [context, dispatch] = useContext(Context)
 
   const handleEdit = () => {}
 
-  const handleDelete = () => {}
+  const handleDelete = event => {
+    if (!window.confirm('Permanently delete message?')) {
+      return
+    }
+    const menu = document.querySelector('[open=true]')
+    menu.lastChild.style.display = 'none'
+    menu.removeAttribute('open')
+    const id = Number(event.target.closest('article').id)
+    const storage = store.get('store')
+    const data = storage.filter(obj => obj.id !== id)
+    store.set('store', data)
+    dispatch({ type: 'update', payload: data })
+  }
 
   const toggleMenu = event => {
     document.querySelectorAll('[type=dropdown]').forEach(x => {
@@ -40,10 +55,18 @@ export default () => {
 
   return (
     <div className={styles.dropdown} type="dropdown">
-      <button onClick={toggleMenu}>o</button>
+      <button onClick={toggleMenu}>
+        <i className="fa fa-ellipsis-vertical"></i>
+      </button>
       <div>
-        <button>Edit</button>
-        <button>Delete</button>
+        <button onClick={handleEdit}>
+          <i className="fa fa-pen-to-square"></i>
+          <span>Edit</span>
+          </button>
+        <button onClick={handleDelete}>
+          <i className="fa fa-trash-can"></i>
+          <span>Delete</span>
+        </button>
       </div>
     </div>
   )

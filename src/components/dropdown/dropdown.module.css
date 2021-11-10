@@ -5,30 +5,30 @@
 }
 
 .dropdown > button {
-  background: red;
+  background: none;
   border: 0;
   color: black;
   font-size: 18px;
-  margin: 0 -5px 5px 0;
-  padding: 0 10px 10px 0;
+  margin: 0;
+  padding: 10px;
   position: absolute;
   right: 0;
   top: 0;
 }
 
 .dropdown > button:active {
-  background: red;
+  background: none;
 }
 
 .dropdown > div {
-  background: red;
+  background: white;
   border: 1px solid #ccc;
   border-radius: 5px;
   display: none;
   padding: 10px 0 20px 0;
   position: absolute;
   right: -210px;
-  bottom: 0px;
+  top: 0px;
   width: 200px;
   z-index: 9999;
 }
@@ -46,7 +46,7 @@
 }
 
 .dropdown > div button:hover {
-  background: orange;
+  background: #eee;
 }
 
 .dropdown > div div span,
