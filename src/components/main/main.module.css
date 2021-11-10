@@ -1,15 +1,14 @@
 .main {
-  height: 100vh;
   margin: 0 auto;
-  padding: 15px;
   position: relative;
   max-width: 800px;
 }
 
 .input {
-  bottom: 25px;
-  margin-top: 10px;
+  background: white;
+  bottom: 0;
   max-width: 800px;
+  padding-bottom: 25px;
   position: fixed;
   width: 100%;
 }
@@ -31,7 +30,6 @@
   border-top: 2px solid #ccc;
   border-radius: 0 0 5px 5px;
   padding: 5px 10px;
-
   margin-top: -5px;
 }
 
@@ -47,9 +45,8 @@
 
 .feed {
   padding-bottom: 115px;
+  min-width: 800px;
   width: 100%;
-
-  border: 1px dashed orange;
 }
 
 .feed article {

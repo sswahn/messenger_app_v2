@@ -7,18 +7,8 @@ import styles from './main.module.css'
 export default () => {
   const [context, dispatch] = useContext(Context)
 
-  const [state, setState] = useState({
-    bold: false,
-    italic: false
-  })
+  const [state, setState] = useState({})
 
-  const handleBold = event => {
-    setState({ ...state, bold: !state.bold })
-  }
-
-  const handleItalic = event => {
-    setState({ ...state, italic: !state.italic })
-  }
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -49,13 +39,10 @@ export default () => {
 
   return (
     <form className={styles.input} onSubmit={handleSubmit}>
-      <textarea placeholder="Write a message" style={{
-        fontWeight: state.bold ? 'bold' : 'normal',
-        fontStyle: state.italic ? 'italic' : 'normal'
-      }}></textarea>
+      <textarea placeholder="Write a message"></textarea>
       <div role="toolbar">
-        <button onClick={handleBold}><b>B</b></button>
-        <button onClick={handleItalic}><i>i</i></button>
+        <button><b>B</b></button>
+        <button><i>i</i></button>
         <button>link</button>
         <button>@</button>
         <button>emoji</button>

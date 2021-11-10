@@ -9,16 +9,8 @@
   padding: 0;
 }
 
-html {
+html, body {
   width: 100%;
-
-  border: 2px dashed red;
-}
-
-body {
-  width: 100%;
-
-  border: 2px dashed green;
 }
 
 button {

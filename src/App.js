@@ -3,8 +3,9 @@ import Main from './components/main/Main'
 import "./index.css"
 
 /**
- * textarea container should have white background
- * so that scrolling items are hidden behind it
+ * create dropdown menu on feed items
+ * like in the games site youtube style dropdown
+ * for edit, delete, etc. buttons
  */
 
 export default () => 
