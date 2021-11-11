@@ -3,11 +3,9 @@ import Main from './components/main/Main'
 import "./index.css"
 
 /**
- * toolbar functionality
+ * Login page
  * 
- * do basic text/input validation/sanitation.
- * 
- * show image thumbnail preview on image upload
+ * toolbar functionality : image upload
  * 
  * figure out how to get page 
  * title/description/image/video/favicon from links

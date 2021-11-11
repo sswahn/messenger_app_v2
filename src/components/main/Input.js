@@ -90,6 +90,7 @@ export default () => {
         onKeyDown={handleKeyDown} 
         onChange={handleOnChange}
         style={{height: state.textarea_height}}>
+          {/** state.img_src ? <img src={state_src} alt="" /> : <></> */}
       </textarea>
       <div role="toolbar">
         <div>

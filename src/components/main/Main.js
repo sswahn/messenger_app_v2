@@ -1,8 +1,11 @@
+import { useState } from 'react'
+import styles from './main.module.css'
 import Input from './Input'
 import Feed from './Feed'
-import styles from './main.module.css'
+import Login from '../login/Login'
 
 export default () => {
+  const [state, setState] = useState({ logged_in: false })
 
   const dragOverHandler = event => {
     // this function prevents default behavior 
@@ -17,9 +20,14 @@ export default () => {
   }
 
   return (
-    <main className={styles.main} onDrop={handleDragAndDrop} onDragOver={dragOverHandler}>
-      <Feed />
-      <Input />
-    </main>
+    <>
+      {state.logged_in 
+        ? <main className={styles.main} onDrop={handleDragAndDrop} onDragOver={dragOverHandler}>
+            <Feed />
+            <Input />
+          </main>
+        : <Login />
+      }
+    </>
   )
 }
