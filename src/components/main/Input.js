@@ -84,28 +84,35 @@ export default () => {
       </textarea>
       <div role="toolbar">
         <div>
-          <button>
+          <button className={styles.tooltip}>
             <i className="fa fa-bold"></i>
+            <span className={styles.tooltiptext}>Bold</span>
           </button>
-          <button>
+          <button className={styles.tooltip}>
             <i className="fa fa-italic"></i>
+            <span className={styles.tooltiptext}>Italic</span>
+          </button>
+          <button className={styles.tooltip}>
+            <i className="fa fa-link"></i>
+            <span className={styles.tooltiptext}>Link</span>
           </button>
         </div>
         <div>
-          <button>
-            <i className="fa fa-link"></i>
-          </button>
-          <button>
+          <button className={styles.tooltip}>
             <i className="fa fa-at"></i>
+            <span className={styles.tooltiptext}>Mention</span>
           </button>
-          <button>
+          <button className={styles.tooltip}>
             <i className="fa fa-face-smile"></i>
+            <span className={styles.tooltiptext}>Emoji</span>
           </button>
-          <button>
+          <button className={styles.tooltip}>
             <i className="fa fa-image"></i>
+            <span className={styles.tooltiptext}>Upload</span>
           </button>
-          <button type="submit">
+          <button className={styles.tooltip} type="submit">
             <i className="fa fa-paper-plane"></i>
+            <span className={styles.tooltiptext}>Send</span>
           </button>
         </div>
       </div>
