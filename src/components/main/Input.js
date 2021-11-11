@@ -23,10 +23,35 @@ export default () => {
     }
   }
 
+  const handleKeyDown = event => {
+    if (event.keyCode !== 13) {
+      return
+    }
+    event.preventDefault()
+    if (!event.target.value) {
+      return alert('Please enter text to leave a message.')
+    }
+    const request = {
+      id: Math.random(),
+      user: 'Steve',
+      date: new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(
+        new Date(Date.UTC(2020, 11, 20, 3, 23, 16, 738))
+      ),
+      message: event.target.value
+    }
+
+    const storage = store.get('store') || []
+    const data = [ ...storage, request ]
+    store.set('store', data)
+    event.target.value = ''
+    dispatch({ type: 'update', payload: data })
+    event.target.focus()
+  }
+
   const handleSubmit = async event => {
     event.preventDefault()
     if (!event.target.elements[0].value) {
-      return alert('Write a message.')
+      return alert('Please enter text to leave a message.')
     }
     const request = {
       id: Math.random(),
@@ -52,7 +77,11 @@ export default () => {
 
   return (
     <form className={styles.input} onSubmit={handleSubmit}>
-      <textarea placeholder="Write a message" onChange={handleTextareaExpansion} style={{height: `${state.field_height}px`}}></textarea>
+      <textarea placeholder="Write a message" 
+        onChange={handleTextareaExpansion} 
+        onKeyDown={handleKeyDown} 
+        style={{height: `${state.field_height}px`}}>
+      </textarea>
       <div role="toolbar">
         <div>
           <button>

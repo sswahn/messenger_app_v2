@@ -3,6 +3,7 @@ import Main from './components/main/Main'
 import "./index.css"
 
 /**
+ * Toolbar button tooltips
  * 
  */
 
