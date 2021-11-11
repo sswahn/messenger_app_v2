@@ -3,8 +3,6 @@ import Main from './components/main/Main'
 import "./index.css"
 
 /**
- * Toolbar button tooltips
- * 
  * toolbar functionality
  * 
  * do basic text/input validation/sanitation.

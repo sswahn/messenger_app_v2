@@ -1,27 +1,26 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect, useRef } from 'react'
 import { Context } from '../../Provider'
 import store from '../../utilities/Store'
 import server from '../../utilities/Server'
 import styles from './main.module.css'
 
 export default () => {
+  const textAreaRef = useRef(null)
   const [context, dispatch] = useContext(Context)
+  const [state, setState] = useState({ 
+    text: '',
+    textarea_height: '50px',
+    parent_height: 'auto'
+  })
 
-  const [state, setState] = useState({ field_height: 50 })
-
-  const handleTextareaExpansion = event => {
-    const count = (event.target.value.split('\n').length - 1)
-    if (state.counter <= 3) {
-      return setState({  ...state, counter: count })
-    }
-    if (count > state.counter) {
-      setState({ 
-        ...state, 
-        field_height: state.field_height + 16, 
-        counter: count 
-      })
-    }
-  }
+  const handleOnChange = event => {
+    setState({
+      ...state,
+      text: event.target.value,
+      textarea_height: 'auto',
+      parent_height: `${textAreaRef.current.scrollHeight}px`
+    })
+	}
 
   const handleKeyDown = event => {
     if (event.keyCode !== 13) {
@@ -75,12 +74,22 @@ export default () => {
     event.target.elements[0].focus()
   }
 
+  useEffect(() => {
+    setState({
+      ...state,
+      textarea_height: `${textAreaRef.current.scrollHeight}px`,
+      parent_height: `${textAreaRef.current.scrollHeight}px`
+    })
+	}, [state.text])
+
   return (
-    <form className={styles.input} onSubmit={handleSubmit}>
-      <textarea placeholder="Write a message" 
-        onChange={handleTextareaExpansion} 
+    <form className={styles.input} onSubmit={handleSubmit}
+      style={{minHeight: state.parent_height}}>
+      <textarea placeholder="Write a message"
+        ref={textAreaRef}
         onKeyDown={handleKeyDown} 
-        style={{height: `${state.field_height}px`}}>
+        onChange={handleOnChange}
+        style={{height: state.textarea_height}}>
       </textarea>
       <div role="toolbar">
         <div>
