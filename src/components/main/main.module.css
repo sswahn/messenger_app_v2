@@ -13,19 +13,26 @@
   width: 100%;
 }
 
-.input textarea {
+.input .textarea {
+  background: white;
   border: 1px solid #222;
   border-bottom: 0;
   border-radius: 5px 5px 0 0;
   font-size: 16px;
   height: 50px;
   outline: none;
-  padding: 15px 10px 0 10px;
+  padding: 13px 10px 0 10px;
   resize: none;
   width: 100%;
 }
 
-.input > div { /* toolbar */
+.input .textarea:empty:before {
+  color: #999;
+  content: attr(data-placeholder);
+  cursor: text;
+}
+
+.input > div:last-child { /* toolbar */
   background: #eee;
   border: 1px solid #222;
   border-top: 2px solid #ccc;
@@ -149,5 +156,5 @@
 
 .feed div {
   font-size: 18px;
-  margin: -30px 0 10px 60px;
+  margin: -30px 0 0 60px;
 }

@@ -16,7 +16,7 @@ export default () => {
   const handleOnChange = event => {
     setState({
       ...state,
-      text: event.target.value,
+      text: document.getElementById('textarea').textContent,
       textarea_height: 'auto',
       parent_height: `${textAreaRef.current.scrollHeight}px`
     })
@@ -27,7 +27,8 @@ export default () => {
       return
     }
     event.preventDefault()
-    if (!event.target.value) {
+    const textarea = document.getElementById('textarea')
+    if (!textarea.textContent) {
       return alert('Please enter text to leave a message.')
     }
     const request = {
@@ -36,20 +37,26 @@ export default () => {
       date: new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(
         new Date(Date.UTC(2020, 11, 20, 3, 23, 16, 738))
       ),
-      message: event.target.value
+      message: textarea.textContent
     }
 
     const storage = store.get('store') || []
     const data = [ ...storage, request ]
     store.set('store', data)
-    event.target.value = ''
+    textarea.textContent = ''
     dispatch({ type: 'update', payload: data })
-    event.target.focus()
+    textarea.focus()
+    setState({
+      text: '',
+      textarea_height: '50px',
+      parent_height: 'auto'
+    })
   }
 
   const handleSubmit = async event => {
     event.preventDefault()
-    if (!event.target.elements[0].value) {
+    const textarea = document.getElementById('textarea')
+    if (!textarea.textContent) {
       return alert('Please enter text to leave a message.')
     }
     const request = {
@@ -58,7 +65,7 @@ export default () => {
       date: new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(
         new Date(Date.UTC(2020, 11, 20, 3, 23, 16, 738))
       ),
-      message: event.target.elements[0].value
+      message: textarea.textContent
     }
 
     //const response = await server.post('post.some.data', request)
@@ -69,9 +76,14 @@ export default () => {
     const storage = store.get('store') || []
     const data = [ ...storage, request ]
     store.set('store', data)
-    event.target.elements[0].value = ''
+    textarea.textContent = ''
     dispatch({ type: 'update', payload: data })
-    event.target.elements[0].focus()
+    textarea.focus()
+    setState({
+      text: '',
+      textarea_height: '50px',
+      parent_height: 'auto'
+    })
   }
 
   useEffect(() => {
@@ -83,15 +95,18 @@ export default () => {
 	}, [state.text])
 
   return (
-    <form className={styles.input} onSubmit={handleSubmit}
+    <form className={styles.input} 
+      onSubmit={handleSubmit}
       style={{minHeight: state.parent_height}}>
-      <textarea placeholder="Write a message"
+      <div id="textarea" className={styles.textarea} 
+        data-placeholder="Write a message"
+        contentEditable="plaintext-only"
         ref={textAreaRef}
         onKeyDown={handleKeyDown} 
-        onChange={handleOnChange}
+        onInput={handleOnChange}
         style={{height: state.textarea_height}}>
           {/** state.img_src ? <img src={state_src} alt="" /> : <></> */}
-      </textarea>
+      </div>
       <div role="toolbar">
         <div>
           <button className={styles.tooltip}>

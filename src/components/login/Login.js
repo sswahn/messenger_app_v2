@@ -8,6 +8,12 @@ export default () => {
   const [context, dispatch] = useContext(Context)
   const [state, setState] = useState({ checked: true })
 
+
+  const underConstruction = event => {
+    event.preventDefault()
+    alert('Page is under construction.')
+  }
+
   const handleCheckbox = event => {
     setState({ checked: !state.checked })
   }
@@ -62,7 +68,7 @@ export default () => {
           <button>create an account</button>
         </div>
         <div className={styles.legal}>
-          <p>By signing up, you agree to the <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>, including <a href="">Cookie Use</a>.</p>
+          <p>By signing up, you agree to the <a href="" onClick={underConstruction}>Terms of Service</a> and <a href="" onClick={underConstruction}>Privacy Policy</a>, including <a href="" onClick={underConstruction}>Cookie Use</a>.</p>
           <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
         </div>
       </div>
