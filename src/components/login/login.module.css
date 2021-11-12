@@ -7,8 +7,6 @@
 }
 
 .container {
-  background: var(--light-color);
-  border-radius: 5px;
   left: 50%;
   margin: 0 auto;
   max-width: 440px;
@@ -21,12 +19,11 @@
 }
 
 .form h2 {
-  color: var(--text-color);
+  color: #0075ff;
   text-align: center;
 }
 
 .form input {
-  box-sizing: border-box;
   display: block;
   font-size: 16px;
   height: 50px;
@@ -35,10 +32,16 @@
   width: 100%;
 }
 
+.form input:focus {
+  border:2px solid #0075ff;
+  outline: none !important;
+}
+
+
 .form button {
-  background: var(--brightest-color);
+  background: #0075ff;
   border: 0;
-  color: var(--text-color);
+  color: white;
   display: block;
   font-size: 16px;
   font-weight: bold;
@@ -48,18 +51,18 @@
 }
 
 .form button:hover {
-  background: #666;
+  background: #0063d9;
 }
 
 .form div {
-  color: var(--text-color);
   display: flex;
   justify-content: space-between;
 }
 
 .form label {
-  cursor: pointer;
   display: flex;
+  color: #777;
+  cursor: pointer;
   width: 160px;
 }
 
@@ -78,13 +81,52 @@
 
 .form button:last-child {
   background: none;
+  color: #777;
   font-weight: normal;
   height: auto;
   margin: 0;
 }
 .form button:last-child:hover,
 .form label:hover, .form a:hover {
+  color: #444;
   text-decoration: underline;
+}
+
+.container hr {
+  margin: 40px 0 -10px 0;
+}
+.register {
+  color: #777;
+  text-align: right;
+}
+
+.register > button {
+  background: none;
+  border: 0;
+  color: #0075ff;
+  display: inline-block;
+  font-size: 16px;
+  height: 50px;
+  margin: 20px 0 10px;
+}
+
+.register > button:hover {
+  text-decoration: underline;
+}
+
+.legal {
+  color: #777;
+  font-size: 12px;
+}
+
+.legal p {
+  margin-bottom: 5px;
+}
+
+.legal a,
+.legal a:active
+.legal a:focus {
+  color: #222;
 }
 
 @media all and (max-width: 500px) {

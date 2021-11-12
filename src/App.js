@@ -3,7 +3,7 @@ import Main from './components/main/Main'
 import "./index.css"
 
 /**
- * Login page
+ * Register/forgot password modals
  * 
  * toolbar functionality : image upload
  * 

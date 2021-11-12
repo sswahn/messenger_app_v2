@@ -21,3 +21,20 @@ button {
   font-weight: normal;
   font-style: normal;
 }
+
+.modal {
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  z-index: 99999;
+}
+
+.content {
+  width: 100%;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
