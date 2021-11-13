@@ -13,6 +13,27 @@ export default () => {
     parent_height: 'auto'
   })
 
+
+  // may have to separate these into bold and italic functions again
+  const handleFormatText = format => {
+    const textarea = document.getElementById('textarea')
+    if (!textarea.innerHTML) {
+      return console.log('setstate to format all text.')
+    }
+    const selection = window.getSelection()
+    const fragment = selection.getRangeAt(0).cloneContents()
+    if (fragment.firstChild.dataset) {
+      const id = fragment.firstChild.dataset.identifier
+      const element = textarea.querySelector(`[data-identifier="${id}"]`)
+      element.replaceWith(element.firstChild)
+      return
+    }
+    const element = document.createElement(format)
+    element.setAttribute('data-identifier', crypto.randomUUID())
+    selection.getRangeAt(0).surroundContents(element)
+  
+  }
+
   const handleOnChange = event => {
     setState({
       ...state,
@@ -67,7 +88,7 @@ export default () => {
       date: new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(
         new Date(Date.UTC(2020, 11, 20, 3, 23, 16, 738))
       ),
-      message: textarea.textContent
+      message: textarea.innerHTML
     }
 
     //const response = await server.post('post.some.data', request)
@@ -111,33 +132,33 @@ export default () => {
       </div>
       <div role="toolbar">
         <div>
-          <button className={styles.tooltip}>
+          <button type="button" className={styles.tooltip} onClick={() => handleFormatText('b')}>
             <i className="fa fa-bold"></i>
             <span className={styles.tooltiptext}>Bold</span>
           </button>
-          <button className={styles.tooltip}>
+          <button type="button" className={styles.tooltip} onClick={() => handleFormatText('i')}>
             <i className="fa fa-italic"></i>
             <span className={styles.tooltiptext}>Italic</span>
           </button>
-          <button className={styles.tooltip}>
+          <button type="button" className={styles.tooltip}>
             <i className="fa fa-link"></i>
             <span className={styles.tooltiptext}>Link</span>
           </button>
         </div>
         <div>
-          <button className={styles.tooltip}>
+          <button type="button" className={styles.tooltip}>
             <i className="fa fa-at"></i>
             <span className={styles.tooltiptext}>Mention</span>
           </button>
-          <button className={styles.tooltip}>
+          <button type="button" className={styles.tooltip}>
             <i className="fa fa-face-smile"></i>
             <span className={styles.tooltiptext}>Emoji</span>
           </button>
-          <button className={styles.tooltip}>
+          <button type="button" className={styles.tooltip}>
             <i className="fa fa-image"></i>
             <span className={styles.tooltiptext}>Upload</span>
           </button>
-          <button className={styles.tooltip} type="submit">
+          <button type="submit" className={styles.tooltip}>
             <i className="fa fa-paper-plane"></i>
             <span className={styles.tooltiptext}>Send</span>
           </button>

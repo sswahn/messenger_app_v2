@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify'
 import { useContext, useState, useEffect } from 'react'
 import { Context } from '../../Provider'
 import store from '../../utilities/Store'
@@ -15,6 +16,10 @@ export default () => {
     setState({ data: storage })
   }
 
+  const parseContent = content => {
+    content.replaceAll()
+  }
+
   // updates state when context change
   useEffect(() => {
     setState({ data: context.data })
@@ -22,6 +27,8 @@ export default () => {
 
   // scroll to bottom
   useEffect(()=> {
+    // to avoid scroll down on edit/delete, 
+    // need condition here:
     window.scroll(0, document.body.offsetHeight)
   }, [state.data])
 
@@ -32,17 +39,17 @@ export default () => {
 
   return (
     <div id="feed" className={styles.feed}>
-      {state.data.length ? state.data.map((item, index) => 
-        <article id={item.id} key={index}>
+      {state.data.length ? state.data.map(item => 
+        <article id={item.id} key={item.id}>
           <header>
             <img src="" alt="" />
             <button rel="author">{item.user}</button>
             <time dateTime="">{item.date}</time>
           </header>
-          <div>{item.message}</div>
+          <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(item.message)}}></div>
           <Dropdown />
         </article>
-      ) : <article>no posts</article>}
+      ) : <article>Leave a message</article>}
     </div>
   )
 }

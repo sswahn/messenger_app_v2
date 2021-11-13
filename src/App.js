@@ -4,14 +4,12 @@ import Main from './components/main/Main'
 import "./index.css"
 
 /**
- * Register/forgot password modals
  * 
- * toolbar functionality : image upload
+ * toolbar functionality: bold/italic/link/mention/emoji
  * 
  * figure out how to get page 
  * title/description/image/video/favicon from links
  * (this is serverside issue)
- * 
  * 
  */
 
