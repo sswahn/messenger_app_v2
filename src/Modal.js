@@ -1,5 +1,6 @@
 import { useContext } from 'react'
-import { Context } from '../../Provider'
+import { Context } from './Provider'
+import CreateAccount from './components/login/CreateAccount'
 
 export default function Modal() {
   const [context, dispatch] = useContext(Context)
@@ -7,7 +8,7 @@ export default function Modal() {
   const renderContent = () => {
     switch(context.modal) {
       case 'register':
-        return 
+        return <CreateAccount />
       case 'forgot-password':
        return 
       default:

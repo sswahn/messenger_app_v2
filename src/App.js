@@ -1,4 +1,5 @@
 import Provider from './Provider'
+import Modal from './Modal'
 import Main from './components/main/Main'
 import "./index.css"
 
@@ -16,5 +17,6 @@ import "./index.css"
 
 export default () => 
   <Provider>
+    <Modal />
     <Main />
   </Provider>

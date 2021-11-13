@@ -17,7 +17,7 @@ export default () => {
     setState({
       ...state,
       text: document.getElementById('textarea').textContent,
-      textarea_height: 'auto',
+      textarea_height: '50px',
       parent_height: `${textAreaRef.current.scrollHeight}px`
     })
 	}
@@ -31,6 +31,7 @@ export default () => {
     if (!textarea.textContent) {
       return alert('Please enter text to leave a message.')
     }
+
     const request = {
       id: Math.random(),
       user: 'Steve',
@@ -59,6 +60,7 @@ export default () => {
     if (!textarea.textContent) {
       return alert('Please enter text to leave a message.')
     }
+    
     const request = {
       id: Math.random(),
       user: 'Steve',

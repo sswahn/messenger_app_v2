@@ -5,7 +5,7 @@ import Feed from './Feed'
 import Login from '../login/Login'
 
 export default () => {
-  const [state, setState] = useState({ logged_in: true })
+  const [state, setState] = useState({ logged_in: false })
 
   const dragOverHandler = event => {
     // this function prevents default behavior 

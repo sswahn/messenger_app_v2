@@ -7,6 +7,7 @@
 }
 
 .container {
+  background: white;
   left: 50%;
   margin: 0 auto;
   max-width: 440px;
@@ -79,14 +80,14 @@
   text-decoration: none;
 }
 
-.form button:last-child {
+.form button[type=button]:last-child {
   background: none;
   color: #777;
   font-weight: normal;
   height: auto;
   margin: 0;
 }
-.form button:last-child:hover,
+.form button[type=button]:last-child:hover,
 .form label:hover, .form a:hover {
   color: #444;
   text-decoration: underline;

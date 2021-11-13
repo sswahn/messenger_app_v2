@@ -18,6 +18,10 @@ export default () => {
     setState({ checked: !state.checked })
   }
 
+  const handleCreatAccount = event => {
+    dispatch({ type: 'modal', payload: 'register' })
+  }
+
   const handleSubmit = async event => {
     event.preventDefault()
     const request = {
@@ -31,18 +35,6 @@ export default () => {
     window.location.href = config.url.home
   }
 
-  const closeModal = event => {
-    if (event.target.closest('#login') === null) {
-      dispatch({ type: 'modal' })
-    }
-  }
-
-  useEffect(() => {
-    document.body.addEventListener('click', closeModal)
-    return () => {
-      document.body.removeEventListener('click', closeModal)
-    }
-  }, [])
 
   return (
     <div className={styles.login}>
@@ -58,14 +50,14 @@ export default () => {
               <span>Remember Me</span>
             </label>
             <div>
-              <button className="login-form-link">Forgot Password</button>
+              <button type="button" className="login-form-link">Forgot Password</button>
             </div>
           </div>
         </form>
         <hr />
         <div className={styles.register}>
           <span>or </span>
-          <button>create an account</button>
+          <button type="button" onClick={handleCreatAccount}>create an account</button>
         </div>
         <div className={styles.legal}>
           <p>By signing up, you agree to the <a href="" onClick={underConstruction}>Terms of Service</a> and <a href="" onClick={underConstruction}>Privacy Policy</a>, including <a href="" onClick={underConstruction}>Cookie Use</a>.</p>
