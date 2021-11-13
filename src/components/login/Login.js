@@ -8,7 +8,6 @@ export default () => {
   const [context, dispatch] = useContext(Context)
   const [state, setState] = useState({ checked: true })
 
-
   const underConstruction = event => {
     event.preventDefault()
     alert('Page is under construction.')
@@ -16,6 +15,10 @@ export default () => {
 
   const handleCheckbox = event => {
     setState({ checked: !state.checked })
+  }
+
+  const handleForgotPassword = event => {
+    dispatch({ type: 'modal', payload: 'forgot-password'})
   }
 
   const handleCreatAccount = event => {
@@ -50,7 +53,7 @@ export default () => {
               <span>Remember Me</span>
             </label>
             <div>
-              <button type="button" className="login-form-link">Forgot Password</button>
+              <button type="button" className="login-form-link" onClick={handleForgotPassword}>Forgot Password</button>
             </div>
           </div>
         </form>

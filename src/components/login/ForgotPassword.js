@@ -8,24 +8,18 @@ export default () => {
 
   const handleSubmit = async event => {
     event.preventDefault()
-    if (event.target.elements[2].value !== event.target.elements[3].value) {
-      return alert('Passwords do not match.')
-    }
     const request = {
-      username: event.target.elements[0].value,
-      email: event.target.elements[1].value,
-      password: event.target.elements[2].value
+      email: event.target.elements[0].value
     }
     const response = await server.post('api.here', request)
     if (response.error !== undefined) {
       return alert('There was a system error.')
     }
-    // confirmation alert
-    // account was created, please check email to confirm
+    // open reset password modal
   }
 
   const closeModal = event => {
-    if (event.target.closest('#register') === null) {
+    if (event.target.closest('#forgot-password') === null) {
       dispatch({ type: 'modal' })
     }
   }
@@ -38,15 +32,12 @@ export default () => {
   }, [])
   
   return (
-    <div id="register">
+    <div id="forgot-password">
       <div className={styles.container}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <h2>Create Account</h2>
-          <input type="text" placeholder="Username" required />
+          <h2>Confirm Email</h2>
           <input type="email" placeholder="Email" required />
-          <input type="password" placeholder="Password" required />
-          <input type="password" placeholder="Confirm Password" required />
-          <button type="submit">Create</button>
+          <button type="submit">Submit</button>
         </form>
       </div>
     </div>
