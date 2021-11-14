@@ -11,7 +11,8 @@ export default () => {
   const [state, setState] = useState({ 
     text: '',
     textarea_height: '50px',
-    parent_height: 'auto'
+    parent_height: 'auto',
+    emoji: false
   })
 
   const handleToggleItalic = () => {
@@ -63,6 +64,14 @@ export default () => {
     element.setAttribute('data-identifier', crypto.randomUUID())
     selection.getRangeAt(0).surroundContents(element)
   }
+
+  const handleEmojiList = () => {
+    setState({
+      ...state,
+      emoji: !state.emoji
+    })
+  }
+
 
   const handleOnChange = event => {
     setState({
@@ -139,6 +148,22 @@ export default () => {
     })
   }
 
+  const closeModal = event => {
+    if (state.emoji && event.target.closest('#emoji') === null) {
+      setState({
+        ...state,
+        emoji: false
+      })
+    }
+  }
+  
+  useEffect(() => {
+    document.body.addEventListener('click', closeModal)
+    return () => {
+      document.body.removeEventListener('click', closeModal)
+    }
+  }, [state.emoji])
+
   useEffect(() => {
     setState({
       ...state,
@@ -160,6 +185,7 @@ export default () => {
         style={{height: state.textarea_height}}>
           {/** state.img_src ? <img src={state_src} alt="" /> : <></> */}
       </div>
+      {state.emoji ? <Emoji /> : <></>}
       <div role="toolbar">
         <div>
           <button type="button" className={styles.tooltip} onClick={handleToggleBold}>
@@ -180,7 +206,7 @@ export default () => {
             <i className="fa fa-at"></i>
             <span className={styles.tooltiptext}>Mention</span>
           </button>
-          <button type="button" className={styles.tooltip}>
+          <button type="button" className={styles.tooltip} onClick={handleEmojiList}>
             <i className="fa fa-face-smile"></i>
             <span className={styles.tooltiptext}>Emoji</span>
           </button>
