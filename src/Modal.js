@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { Context } from './Provider'
 import CreateAccount from './components/login/CreateAccount'
 import ForgotPassword from './components/login/ForgotPassword'
+import Link from './components/link/Link'
 
 export default function Modal() {
   const [context, dispatch] = useContext(Context)
@@ -12,6 +13,8 @@ export default function Modal() {
         return <CreateAccount />
       case 'forgot-password':
        return <ForgotPassword />
+      case 'link':
+       return <Link />
       default:
         return
     }

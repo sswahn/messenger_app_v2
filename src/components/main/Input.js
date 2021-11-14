@@ -65,6 +65,10 @@ export default () => {
     selection.getRangeAt(0).surroundContents(element)
   }
 
+  const handleLinkModal = event => {
+    dispatch({ type: 'modal', payload: 'link' })
+  }
+
   const handleEmojiList = () => {
     setState({
       ...state,
@@ -196,7 +200,7 @@ export default () => {
             <i className="fa fa-italic"></i>
             <span className={styles.tooltiptext}>Italic</span>
           </button>
-          <button type="button" className={styles.tooltip}>
+          <button type="button" className={styles.tooltip} onClick={handleLinkModal}>
             <i className="fa fa-link"></i>
             <span className={styles.tooltiptext}>Link</span>
           </button>
