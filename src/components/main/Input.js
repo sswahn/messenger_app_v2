@@ -3,6 +3,7 @@ import { Context } from '../../Provider'
 import store from '../../utilities/Store'
 import server from '../../utilities/Server'
 import styles from './main.module.css'
+import Emoji from '../emoji/Emoji'
 
 export default () => {
   const textAreaRef = useRef(null)
@@ -13,9 +14,7 @@ export default () => {
     parent_height: 'auto'
   })
 
-
-  // may have to separate these into bold and italic functions again
-  const handleFormatText = format => {
+  const handleToggleItalic = () => {
     const textarea = document.getElementById('textarea')
     if (!textarea.innerHTML) {
       return console.log('setstate to format all text.')
@@ -23,15 +22,46 @@ export default () => {
     const selection = window.getSelection()
     const fragment = selection.getRangeAt(0).cloneContents()
     if (fragment.firstChild.dataset) {
+      // check if theres an <i> in there also
       const id = fragment.firstChild.dataset.identifier
       const element = textarea.querySelector(`[data-identifier="${id}"]`)
       element.replaceWith(element.firstChild)
       return
     }
-    const element = document.createElement(format)
+    const element = document.createElement('i')
     element.setAttribute('data-identifier', crypto.randomUUID())
     selection.getRangeAt(0).surroundContents(element)
-  
+  }
+
+  // needs another condition:
+  // if its bold (could be a segment of bold statement)
+  // need to unbold it with button click
+  const handleToggleBold = () => {
+    const textarea = document.getElementById('textarea')
+    const selection = window.getSelection()
+    const fragment = selection.getRangeAt(0).cloneContents()
+
+    // if there is no selection then condition is met
+    if (!fragment.firstChild) {
+      
+    }
+
+    // if selection is already bold
+    // see if can identify bold with something other than "dataset"
+    // check element.style.fontWeight === bold, or something like that
+    // which might mean instead of using <b>
+    // we use <span style="font-weight: bold;"></span>
+    // i think that is the way to go :D
+    if (fragment.firstChild.dataset) {
+      // check if theres an <i> in there also
+      const id = fragment.firstChild.dataset.identifier
+      const element = textarea.querySelector(`[data-identifier="${id}"]`)
+      element.replaceWith(element.firstChild)
+      return
+    }
+    const element = document.createElement('b')
+    element.setAttribute('data-identifier', crypto.randomUUID())
+    selection.getRangeAt(0).surroundContents(element)
   }
 
   const handleOnChange = event => {
@@ -121,7 +151,7 @@ export default () => {
     <form className={styles.input} 
       onSubmit={handleSubmit}
       style={{minHeight: state.parent_height}}>
-      <div id="textarea" className={styles.textarea} 
+      <div id="textarea" className={styles.textarea}
         data-placeholder="Write a message"
         contentEditable="plaintext-only"
         ref={textAreaRef}
@@ -132,11 +162,11 @@ export default () => {
       </div>
       <div role="toolbar">
         <div>
-          <button type="button" className={styles.tooltip} onClick={() => handleFormatText('b')}>
+          <button type="button" className={styles.tooltip} onClick={handleToggleBold}>
             <i className="fa fa-bold"></i>
             <span className={styles.tooltiptext}>Bold</span>
           </button>
-          <button type="button" className={styles.tooltip} onClick={() => handleFormatText('i')}>
+          <button type="button" className={styles.tooltip} onClick={handleToggleItalic}>
             <i className="fa fa-italic"></i>
             <span className={styles.tooltiptext}>Italic</span>
           </button>
