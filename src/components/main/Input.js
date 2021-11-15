@@ -42,27 +42,35 @@ export default () => {
     const selection = window.getSelection()
     const fragment = selection.getRangeAt(0).cloneContents()
 
-    // if there is no selection then condition is met
-    if (!fragment.firstChild) {
-      
-    }
+    console.log(selection)
 
-    // if selection is already bold
-    // see if can identify bold with something other than "dataset"
-    // check element.style.fontWeight === bold, or something like that
-    // which might mean instead of using <b>
-    // we use <span style="font-weight: bold;"></span>
-    // i think that is the way to go :D
-    if (fragment.firstChild.dataset) {
-      // check if theres an <i> in there also
-      const id = fragment.firstChild.dataset.identifier
-      const element = textarea.querySelector(`[data-identifier="${id}"]`)
-      element.replaceWith(element.firstChild)
+    if (!fragment.firstChild) {
+      // if there is no selection 
+      // all after cursor should be bold
       return
     }
-    const element = document.createElement('b')
-    element.setAttribute('data-identifier', crypto.randomUUID())
-    selection.getRangeAt(0).surroundContents(element)
+    if (fragment.firstChild?.style?.fontWeight === 'bold') {
+      const id = fragment.firstChild.dataset.identifier
+      const element = textarea.querySelector(`[data-identifier="${id}"]`)
+      element.style.fontWeight = 'normal'
+    } else if (fragment.firstChild.dataset) {
+      const id = fragment.firstChild.dataset.identifier
+      const element = textarea.querySelector(`[data-identifier="${id}"]`)
+      element.style.fontWeight = 'bold'
+    }
+    if (fragment.firstChild.nodeName !== 'SPAN') {
+      const element = document.createElement('span')
+      element.style.fontWeight = 'bold'
+      element.setAttribute('data-identifier', crypto.randomUUID())
+      selection.getRangeAt(0).surroundContents(element)
+    }
+    // need the following condition:
+    // if selection is segment of bold statement
+    // get the selection text and remove it from the span
+    // append the selection text after the original span
+    // if then original span has italic & bold and you need to retain the italic
+    // then create another span with italic, give it the selection text
+    // then append it after the original span
   }
 
   const handleLinkModal = event => {
@@ -75,7 +83,6 @@ export default () => {
       emoji: !state.emoji
     })
   }
-
 
   const handleOnChange = event => {
     setState({
