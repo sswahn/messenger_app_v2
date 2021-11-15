@@ -9,6 +9,7 @@ export default () => {
   const textAreaRef = useRef(null)
   const [context, dispatch] = useContext(Context)
   const [state, setState] = useState({ 
+    stored_text: store.get('text') || '',
     text: '',
     textarea_height: '50px',
     parent_height: 'auto',
@@ -42,35 +43,54 @@ export default () => {
     const selection = window.getSelection()
     const fragment = selection.getRangeAt(0).cloneContents()
 
-    console.log(selection)
-
     if (!fragment.firstChild) {
-      // if there is no selection 
-      // all after cursor should be bold
+      console.log('should only see this if there is no selection.')
+    // if nothing is selected:
+    // create setState that makes onChange method append to a bold span
       return
     }
-    if (fragment.firstChild?.style?.fontWeight === 'bold') {
-      const id = fragment.firstChild.dataset.identifier
-      const element = textarea.querySelector(`[data-identifier="${id}"]`)
-      element.style.fontWeight = 'normal'
-    } else if (fragment.firstChild.dataset) {
-      const id = fragment.firstChild.dataset.identifier
-      const element = textarea.querySelector(`[data-identifier="${id}"]`)
-      element.style.fontWeight = 'bold'
-    }
+
     if (fragment.firstChild.nodeName !== 'SPAN') {
       const element = document.createElement('span')
       element.style.fontWeight = 'bold'
       element.setAttribute('data-identifier', crypto.randomUUID())
       selection.getRangeAt(0).surroundContents(element)
+    } else {
+      const id = fragment.firstChild.dataset?.identifier
+      const element = textarea.querySelector(`[data-identifier="${id}"]`)
+      fragment.firstChild.style?.fontWeight === 'bold'
+        ? element.style.fontWeight = 'normal'
+        : element.style.fontWeight = 'bold' 
     }
-    // need the following condition:
-    // if selection is segment of bold statement
-    // get the selection text and remove it from the span
-    // append the selection text after the original span
-    // if then original span has italic & bold and you need to retain the italic
-    // then create another span with italic, give it the selection text
-    // then append it after the original span
+
+    // try this: (slack-like way)
+    // when bold or italic button is clicked
+    // it setState weather one or the other or both are active
+    // then you just compare state to selection
+    // if (state.bold) append text to a <strong> element
+    // if (state.italic) append text to <em> element
+    // if (state.italic && state.bold) append to <em> and em to <strong>
+
+
+
+
+
+
+    // what is the logic?
+    // 1.
+    // if nothing is selected:
+    // create setState that makes onChange method append to a bold span
+    // 2.
+    // if there is a selection find out if its bold or not,
+    // if its not, then make it bold...
+    // if it is bold then wrap in span with style font-weight normal
+    // 3.
+    // if there is a selection (this is performed by the first check, no need to make an if)
+    // make a span that is bold style
+    // and append text to it
+
+    console.log('font weight: ', fragment.firstChild?.style?.fontWeight)
+    console.log('selection text: ', selection.toString())
   }
 
   const handleLinkModal = event => {
@@ -85,6 +105,8 @@ export default () => {
   }
 
   const handleOnChange = event => {
+    store.set('text', event.target.outerText)
+    // this controls dynamic field height
     setState({
       ...state,
       text: document.getElementById('textarea').textContent,
@@ -153,6 +175,7 @@ export default () => {
     dispatch({ type: 'update', payload: data })
     textarea.focus()
     setState({
+      stored_text: '',
       text: '',
       textarea_height: '50px',
       parent_height: 'auto'
@@ -190,10 +213,13 @@ export default () => {
       <div id="textarea" className={styles.textarea}
         data-placeholder="Write a message"
         contentEditable="plaintext-only"
+        spellCheck="true"
+        tabIndex="0"
         ref={textAreaRef}
         onKeyDown={handleKeyDown} 
         onInput={handleOnChange}
         style={{height: state.textarea_height}}>
+          {state.stored_text}
           {/** state.img_src ? <img src={state_src} alt="" /> : <></> */}
       </div>
       {state.emoji ? <Emoji /> : <></>}
