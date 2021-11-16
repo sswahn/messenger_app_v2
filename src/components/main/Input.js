@@ -71,7 +71,8 @@ export default () => {
     // if (state.italic) append text to <em> element
     // if (state.italic && state.bold) append to <em> and em to <strong>
 
-
+    // check this out to find out how to get cursor position:
+    // https://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container/4812022#4812022
 
 
 
@@ -174,6 +175,7 @@ export default () => {
     textarea.textContent = ''
     dispatch({ type: 'update', payload: data })
     textarea.focus()
+    store.remove('text')
     setState({
       stored_text: '',
       text: '',
@@ -210,9 +212,11 @@ export default () => {
     <form className={styles.input} 
       onSubmit={handleSubmit}
       style={{minHeight: state.parent_height}}>
+      {state.emoji ? <Emoji /> : <></>}
       <div id="textarea" className={styles.textarea}
         data-placeholder="Write a message"
         contentEditable="plaintext-only"
+        suppressContentEditableWarning="true"
         spellCheck="true"
         tabIndex="0"
         ref={textAreaRef}
@@ -222,7 +226,6 @@ export default () => {
           {state.stored_text}
           {/** state.img_src ? <img src={state_src} alt="" /> : <></> */}
       </div>
-      {state.emoji ? <Emoji /> : <></>}
       <div role="toolbar">
         <div>
           <button type="button" className={styles.tooltip} onClick={handleToggleBold}>
