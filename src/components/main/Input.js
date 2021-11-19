@@ -16,32 +16,17 @@ export default () => {
     emoji: false
   })
 
-  const handleToggleItalic = () => {
-    const textarea = document.getElementById('textarea')
-    if (!textarea.innerHTML) {
-      return console.log('setstate to format all text.')
-    }
-    const selection = window.getSelection()
-    const fragment = selection.getRangeAt(0).cloneContents()
-    if (fragment.firstChild.dataset) {
-      // check if theres an <i> in there also
-      const id = fragment.firstChild.dataset.identifier
-      const element = textarea.querySelector(`[data-identifier="${id}"]`)
-      element.replaceWith(element.firstChild)
-      return
-    }
-    const element = document.createElement('i')
-    element.setAttribute('data-identifier', crypto.randomUUID())
-    selection.getRangeAt(0).surroundContents(element)
-  }
-
-  // needs another condition:
-  // if its bold (could be a segment of bold statement)
-  // need to unbold it with button click
   const handleToggleBold = () => {
     const textarea = document.getElementById('textarea')
     const selection = window.getSelection()
-    const fragment = selection.getRangeAt(0).cloneContents()
+    const range = selection.getRangeAt(0)
+    const fragment = range.cloneContents()
+
+    const preSelectionRange = range.cloneRange() // this gets caret locaiton
+
+    console.log('range: ', range)
+    console.log('slection range: ', selection.toString().length)
+    console.log('pre selection range: ',  preSelectionRange.startOffset)
 
     if (!fragment.firstChild) {
       console.log('should only see this if there is no selection.')
@@ -75,21 +60,6 @@ export default () => {
     // https://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container/4812022#4812022
 
 
-
-
-    // what is the logic?
-    // 1.
-    // if nothing is selected:
-    // create setState that makes onChange method append to a bold span
-    // 2.
-    // if there is a selection find out if its bold or not,
-    // if its not, then make it bold...
-    // if it is bold then wrap in span with style font-weight normal
-    // 3.
-    // if there is a selection (this is performed by the first check, no need to make an if)
-    // make a span that is bold style
-    // and append text to it
-
     console.log('font weight: ', fragment.firstChild?.style?.fontWeight)
     console.log('selection text: ', selection.toString())
   }
@@ -106,11 +76,12 @@ export default () => {
   }
 
   const handleOnChange = event => {
+    // save text to local storage:
     store.set('text', event.target.outerText)
-    // this controls dynamic field height
+    // this controls dynamic field height:
     setState({
       ...state,
-      text: document.getElementById('textarea').textContent,
+      text: event.target.outerText,
       textarea_height: '50px',
       parent_height: `${textAreaRef.current.scrollHeight}px`
     })
@@ -125,7 +96,6 @@ export default () => {
     if (!textarea.textContent) {
       return alert('Please enter text to leave a message.')
     }
-
     const request = {
       id: Math.random(),
       user: 'Steve',
@@ -134,7 +104,6 @@ export default () => {
       ),
       message: textarea.textContent
     }
-
     const storage = store.get('store') || []
     const data = [ ...storage, request ]
     store.set('store', data)
@@ -143,7 +112,7 @@ export default () => {
     textarea.focus()
     setState({
       text: '',
-      textarea_height: '50px',
+      textarea_height: 'auto',
       parent_height: 'auto'
     })
   }
@@ -154,7 +123,6 @@ export default () => {
     if (!textarea.textContent) {
       return alert('Please enter text to leave a message.')
     }
-    
     const request = {
       id: Math.random(),
       user: 'Steve',
@@ -163,12 +131,10 @@ export default () => {
       ),
       message: textarea.innerHTML
     }
-
     //const response = await server.post('post.some.data', request)
     /*if (response.error !== undefined) {
       return alert('There was a system error.')
     }*/
-
     const storage = store.get('store') || []
     const data = [ ...storage, request ]
     store.set('store', data)
@@ -232,7 +198,7 @@ export default () => {
             <i className="fa fa-bold"></i>
             <span className={styles.tooltiptext}>Bold</span>
           </button>
-          <button type="button" className={styles.tooltip} onClick={handleToggleItalic}>
+          <button type="button" className={styles.tooltip}>
             <i className="fa fa-italic"></i>
             <span className={styles.tooltiptext}>Italic</span>
           </button>

@@ -1,9 +1,12 @@
+import { useContext } from 'react'
+import { Context } from '../../Provider'
+import store from '../../utilities/Store'
 import styles from './emoji.module.css'
 
 export default () => {
+  const [context, dispatch] = useContext(Context)
 
   const handleEmoji = event => {
-    //TODO: needs to append/insert at cursor location...
     document.getElementById('textarea').appendChild(
       document.createTextNode(event.target.textContent)
     )

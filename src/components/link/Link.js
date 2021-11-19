@@ -19,7 +19,7 @@ export default () => {
 
     const element = document.createElement('a')
     element.href = url
-    element.innerText = text
+    element.innerText = text || url
     element.target = '_blank'
     element.rel = 'noopener noreferrer'
     element.tabIndex = '-1'
@@ -66,7 +66,7 @@ export default () => {
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2>Add link</h2>
         <input type="text" maxLength="2000" placeholder="Link text" />
-        <input type="url" maxLength="2000" placeholder="https://example.com" />
+        <input type="url" pattern="https?://.+" maxLength="2000" placeholder="https://example.com" required />
         <button type="submit">Save</button>
       </form>
     </div>

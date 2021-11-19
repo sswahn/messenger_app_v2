@@ -6,7 +6,8 @@ export default function Provider({ children }) {
   const store = {
     data: [],
     alert: undefined,
-    modal: undefined
+    modal: undefined,
+    cursor: undefined
   }
   function reducer(state, action) {
     switch(action.type) {
@@ -16,6 +17,8 @@ export default function Provider({ children }) {
         return { ...state, alert: action.payload }
       case 'modal':
         return { ...state, modal: action.payload }
+      case 'cursor':
+        return { ...state, cursor: action.payload }
       default:
         return state
     }
