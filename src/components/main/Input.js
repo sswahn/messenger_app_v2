@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState } from 'react'
 import { Context } from '../../Provider'
 import store from '../../utilities/Store'
 import server from '../../utilities/Server'
@@ -75,24 +75,11 @@ export default () => {
     setState({ stored_text: '' })
   }
 
-  const closeModal = event => {
-    if (state.emoji && event.target.closest('#emoji') === null) {
-      setState({ ...state, emoji: false })
-    }
-  }
-  
-  useEffect(() => {
-    document.body.addEventListener('click', closeModal)
-    return () => {
-      document.body.removeEventListener('click', closeModal)
-    }
-  }, [state.emoji])
 
   return (
     <form className={styles.input} 
       onSubmit={handleSubmit}
       style={{minHeight: state.parent_height}}>
-      {state.emoji ? <Emoji /> : <></>}
       <div id="textarea" className={styles.textarea}
         data-placeholder="Write a message"
         contentEditable="plaintext-only"

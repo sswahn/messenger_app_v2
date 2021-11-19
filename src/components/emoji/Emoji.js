@@ -1,10 +1,7 @@
-import { useContext } from 'react'
-import { Context } from '../../Provider'
-import store from '../../utilities/Store'
+
 import styles from './emoji.module.css'
 
 export default () => {
-  const [context, dispatch] = useContext(Context)
 
   const handleEmoji = event => {
     document.getElementById('textarea').appendChild(
