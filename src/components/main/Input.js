@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { Context } from '../../Provider'
 import store from '../../utilities/Store'
 import server from '../../utilities/Server'
@@ -6,13 +6,9 @@ import styles from './main.module.css'
 import Emoji from '../emoji/Emoji'
 
 export default () => {
-  const textAreaRef = useRef(null)
   const [context, dispatch] = useContext(Context)
   const [state, setState] = useState({ 
     stored_text: store.get('text') || '',
-    text: '',
-    textarea_height: '50px',
-    parent_height: 'auto',
     emoji: false
   })
 
@@ -59,9 +55,6 @@ export default () => {
     // check this out to find out how to get cursor position:
     // https://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container/4812022#4812022
 
-
-    console.log('font weight: ', fragment.firstChild?.style?.fontWeight)
-    console.log('selection text: ', selection.toString())
   }
 
   const handleLinkModal = event => {
@@ -75,19 +68,10 @@ export default () => {
     })
   }
 
-  const handleOnChange = event => {
+  const handleKeyDown = event => {
     // save text to local storage:
     store.set('text', event.target.outerText)
-    // this controls dynamic field height:
-    setState({
-      ...state,
-      text: event.target.outerText,
-      textarea_height: '50px',
-      parent_height: `${textAreaRef.current.scrollHeight}px`
-    })
-	}
 
-  const handleKeyDown = event => {
     if (event.keyCode !== 13) {
       return
     }
@@ -110,11 +94,7 @@ export default () => {
     textarea.textContent = ''
     dispatch({ type: 'update', payload: data })
     textarea.focus()
-    setState({
-      text: '',
-      textarea_height: 'auto',
-      parent_height: 'auto'
-    })
+    setState({ stored_text: '' })
   }
 
   const handleSubmit = async event => {
@@ -142,12 +122,7 @@ export default () => {
     dispatch({ type: 'update', payload: data })
     textarea.focus()
     store.remove('text')
-    setState({
-      stored_text: '',
-      text: '',
-      textarea_height: '50px',
-      parent_height: 'auto'
-    })
+    setState({ stored_text: '' })
   }
 
   const closeModal = event => {
@@ -166,14 +141,6 @@ export default () => {
     }
   }, [state.emoji])
 
-  useEffect(() => {
-    setState({
-      ...state,
-      textarea_height: `${textAreaRef.current.scrollHeight}px`,
-      parent_height: `${textAreaRef.current.scrollHeight}px`
-    })
-	}, [state.text])
-
   return (
     <form className={styles.input} 
       onSubmit={handleSubmit}
@@ -185,10 +152,7 @@ export default () => {
         suppressContentEditableWarning="true"
         spellCheck="true"
         tabIndex="0"
-        ref={textAreaRef}
-        onKeyDown={handleKeyDown} 
-        onInput={handleOnChange}
-        style={{height: state.textarea_height}}>
+        onKeyDown={handleKeyDown}>
           {state.stored_text}
           {/** state.img_src ? <img src={state_src} alt="" /> : <></> */}
       </div>
